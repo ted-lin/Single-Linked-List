@@ -28,9 +28,9 @@ int list_rem_next(List *list, ListElmt *element, void **data);
 #define list_size(list) ((list)->size)
 #define list_head(list) ((list)->head)
 #define list_tail(list) ((list)->tail)
-#define list_is_head(list, element) ((element) == (list)->head ? 1 : 0)
-#define list_is_tail(list, element) ((element) == (list)->tail ? 1 : 0)
 #define list_data(element) ((element)->data)
 #define list_next(element) ((element)->next)
+#define list_is_head(list, element) ((element) == (list)->head ? 1 : 0)
+#define list_is_tail(list, element) ((element) == (list)->tail ? 1 : 0)
 
 #endif /* end define of __ALGO_LIST_H__ */
