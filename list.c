@@ -26,23 +26,29 @@ void list_destroy(List *list) {
   return;
 }
 
+void my_destroy(void *data) {
+	if(data) free(data);
+	return;
+}
+
 int list_ins_next(List *list, ListElmt *element, const void *data) {
 	ListElmt * new_element;
 
 	if((new_element = (ListElmt *) malloc(sizeof(ListElmt))) == NULL)
         return -1;
 
+    //printf("check data %p, %d, %p\n", new_element, *(int*)data, data);
 	new_element->data = (void *) data;
 
 	if(element == NULL) {
-        /* initalize the list goes here */
+        /* handle insertion at the head of the list */
 		if(list_size(list) == 0)
 			list->tail = new_element;
 
 		new_element->next = list->head;
 		list->head = new_element;
 	} else {
-        /* insert emelent list element goes here */
+        /* handle insertion somewhere other than at the head */
 		if(element->next == NULL)
 			list->tail = new_element;
 
@@ -54,7 +60,7 @@ int list_ins_next(List *list, ListElmt *element, const void *data) {
 	return 0;
 }
 
-int list_rem_next(List *list, ListElmt *emelent, void **data) {
+int list_rem_next(List *list, ListElmt *element, void **data) {
 	ListElmt *old_element;
 
 	if(list_size(list) == 0)
@@ -63,7 +69,7 @@ int list_rem_next(List *list, ListElmt *emelent, void **data) {
 	if(element == NULL) {
 		*data = list->head->data;
 		old_element = list->head;
-		list->head =list->head->next;
+		list->head = list->head->next;
 
 		if(list_size(list) == 1)
 			list->tail = NULL;
@@ -81,7 +87,7 @@ int list_rem_next(List *list, ListElmt *emelent, void **data) {
 
 	free(old_element);
 
-	list-size--;
+	list->size--;
 
 	return 0;
 }
